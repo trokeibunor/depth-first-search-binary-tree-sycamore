@@ -1,3 +1,5 @@
+Here's the link to the result "https://app.codility.com/demo/results/trainingX7FUY2-JZY/"
+
 The basics of this algorithm is to solve a depth first search of a binary tree.
 
 A binary tree is a type of data structure where each node has at most two children, referred to as the left child and the right child. The topmost node is called the root, and nodes with no children are called leaves.
