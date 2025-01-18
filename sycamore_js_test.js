@@ -1,38 +1,35 @@
-class Solution {
-    constructor() {
-        this.maxZigzag = 0;
+function solution(T) {
+  let maxZigzag = 0;
+
+  // prevDir: null for root, 'L' for came from left, 'R' for came from right
+  function findZigzag(node, prevDir, turns) {
+    if (!node) return;
+
+    maxZigzag = Math.max(maxZigzag, turns);
+
+    // Go left
+    if (prevDir === "R") {
+      // Coming from right, going left is a turn
+      findZigzag(node.l, "L", turns + 1);
+    } else {
+      // Coming from left or root, going left is not a turn
+      findZigzag(node.l, "L", turns);
     }
 
-    // Main solution function
-    solution(T) {
-        if (!T) return 0;
-        
-        // Start DFS from root with both left and right possibilities
-        this.findZigzag(T, 'left', 0);
-        this.findZigzag(T, 'right', 0);
-        
-        return this.maxZigzag;
+    // Go right
+    if (prevDir === "L") {
+      // Coming from left, going right is a turn
+      findZigzag(node.r, "R", turns + 1);
+    } else {
+      // Coming from right or root, going right is not a turn
+      findZigzag(node.r, "R", turns);
     }
-    
-    // DFS function to explore all possible paths
-    findZigzag(node, direction, turns) {
-        if (!node) return;
-        
-        // Update max zigzag if current path has more turns
-        this.maxZigzag = Math.max(this.maxZigzag, turns);
-        
-        if (direction === 'left') {
-            // If we're going left, we can:
-            // 1. Continue zigzag by going right (turn)
-            this.findZigzag(node.l, 'right', turns + 1);
-            // 2. Start new zigzag going left (no turn)
-            this.findZigzag(node.l, 'left', 0);
-        } else {
-            // If we're going right, we can:
-            // 1. Continue zigzag by going left (turn)
-            this.findZigzag(node.r, 'left', turns + 1);
-            // 2. Start new zigzag going right (no turn)
-            this.findZigzag(node.r, 'right', 0);
-        }
-    }
+  }
+
+  if (!T) return 0;
+
+  // Start from root (no previous direction)
+  findZigzag(T, null, 0);
+
+  return maxZigzag;
 }
